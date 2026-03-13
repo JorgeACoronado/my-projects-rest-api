@@ -4,32 +4,32 @@ const app = new Hono()
 
 let projects = [
   {
-    id:1,
-    name: "Project 1",
-    description: "First Project on Hono API",
+    id: 1,
+    name: 'Project 1',
+    description: 'First Project on Hono API',
   },
-];
+]
 
-let nextProjectId = 2;
+let nextProjectId = 2
 
 app.get('/', (c) => {
   return c.text('Hello bato!')
 })
 
 app.get('/projects', (c) => {
-  return c.json(projects);
-});
+  return c.json(projects)
+})
 
-app.post('/projects',(c) => {
-  const payload = c.body().json();
+app.post('/projects', (c) => {
+  const payload = c.body().json()
   projects.push({
     id: nextProjectId,
     ...payload,
-});
+  })
 
-  nextProjectId++;
+  nextProjectId++
 
-  return c.json({ ...payload, id: nextProjectId - 1 });
-});
+  return c.json({ ...payload, id: nextProjectId - 1 })
+})
 
 export default app
