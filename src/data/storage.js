@@ -39,7 +39,7 @@ export function getProjectById(id) {
 export function createProject(input) {
   const timestamp = nowIso()
   const project = {
-    id: nextProjectId++,
+    id: nextProjectId,
     name: input.name.trim(),
     description: input.description.trim() || '',
     created_at: timestamp,
@@ -80,6 +80,6 @@ export function deleteProject(id) {
   if (projects.length === startSize) {
     return false
   }
-  
+
   return true
 }
