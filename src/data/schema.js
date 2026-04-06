@@ -19,14 +19,14 @@ export const tasks = sqliteTable(
   'tasks',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    project_id: integer('project_id')
+    projectId: integer('project_id')
       .notNull()
       .references(() => projects.id, { onDelete: 'cascade' }),
     title: text('title').notNull(),
     description: text('description').notNull().default(''),
     status: text('status').notNull().default('todo'),
-    created_at: text('created_at').notNull(),
-    updated_at: text('updated_at').notNull(),
+    createdAt: text('created_at').notNull(),
+    updatedAt: text('updated_at').notNull(),
   },
   (table) => [
     check(
