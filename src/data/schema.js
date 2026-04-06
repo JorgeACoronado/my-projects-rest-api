@@ -11,8 +11,8 @@ export const projects = sqliteTable('projects', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   description: text('description').notNull().default(''),
-  created_at: text('created_at').notNull(),
-  updated_at: text('updated_at').notNull(),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
 })
 
 export const tasks = sqliteTable(
