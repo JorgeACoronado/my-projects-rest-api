@@ -126,14 +126,14 @@ auth.post('/refresh', async (c) => {
   }
 
   const db = getDb(c.env.DB)
-  const tokenHash = await hashToken(payload.refreshToken)
+  const tokenHash = await hashToken(payload.refresh_token)
   const session = await findSessionByTokenHash(db, tokenHash)
 
   if (!session) {
     throw new ApiError(401, 'UNAUTHORIZED', 'Invalid or expired refresh token.')
   }
 
-  if (new Date(session.expires_at) < new Date()) {
+  if (new Date(session.expiresAt) < new Date()) {
     throw new ApiError(401, 'UNAUTHORIZED', 'Invalid or expired refresh token.')
   }
 
@@ -162,7 +162,7 @@ auth.post('/logout', async (c) => {
   }
 
   const db = getDb(c.env.DB)
-  const tokenHash = await hashToken(payload.refreshToken)
+  const tokenHash = await hashToken(payload.refresh_token)
 
   await deleteSessionByTokenHash(db, tokenHash)
 
