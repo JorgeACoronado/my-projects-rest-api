@@ -1,18 +1,16 @@
-import{ z } from 'zod';
+import { z } from 'zod'
 import { ApiError } from './errors.js'
 import { TASK_STATUSES } from './constants.js'
 
 const statusMessage = `Status must be one of: ${TASK_STATUSES.join(', ')}.`
 
-
 const idParamSchema = z
   .string()
   .regex(/^\d+$/, { error: 'ID must be a positive integer.' })
   .transform((value) => Number(value))
-  .refine(
-    (value) => Number.isSafeInteger(value) && value > 0,
-    { error: 'ID must be a positive integer.', }
-  )
+  .refine((value) => Number.isSafeInteger(value) && value > 0, {
+    error: 'ID must be a positive integer.',
+  })
 
 const projectCreateSchema = z.strictObject({
   name: z
@@ -20,9 +18,7 @@ const projectCreateSchema = z.strictObject({
     .trim()
     .min(1, { error: 'Project name is required.' }),
 
-  description: z
-    .string({ error: 'Description must be a string.' })
-    .optional(),
+  description: z.string({ error: 'Description must be a string.' }).optional(),
 })
 
 const projectPatchSchema = z
@@ -128,6 +124,32 @@ function mapZodIssuesToDetails(issues) {
   return details
 }
 
+const registerSchema = z.strictObject({
+  email: z.email({ error: 'Email must be a valid email address.' }),
+  password: z
+    .string({ error: 'Password is required.' })
+    .min(8, { error: 'Password must be at least 8 characters.' }),
+})
+
+const loginSchema = z.strictObject({
+  email: z.email({ error: 'Email must be a valid email address.' }),
+  password: z.string({ error: 'Password is required.' }).min(1, {
+    error: 'Password is required.',
+  }),
+})
+
+const refreshSchema = z.strictObject({
+  refresh_token: z
+    .string({ error: 'Refresh token is required.' })
+    .min(1, { error: 'Refresh token is required.' }),
+})
+
+const logoutSchema = z.strictObject({
+  refresh_token: z
+    .string({ error: 'Refresh token is required.' })
+    .min(1, { error: 'Refresh token is required.' }),
+})
+
 function validateWithSchema(payload, schema) {
   const result = schema.safeParse(payload)
 
@@ -152,4 +174,20 @@ export function validateTaskCreate(payload) {
 
 export function validateTaskPatch(payload) {
   return validateWithSchema(payload, taskPatchSchema)
+}
+
+export function validateRegister(payload) {
+  return validateWithSchema(payload, registerSchema)
+}
+
+export function validateLogin(payload) {
+  return validateWithSchema(payload, loginSchema)
+}
+
+export function validateRefresh(payload) {
+  return validateWithSchema(payload, refreshSchema)
+}
+
+export function validateLogout(payload) {
+  return validateWithSchema(payload, logoutSchema)
 }
