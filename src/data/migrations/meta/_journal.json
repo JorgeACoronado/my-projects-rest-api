@@ -22,6 +22,13 @@
       "when": 1775968715593,
       "tag": "0002_damp_toro",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1776641062587,
+      "tag": "0003_dusty_the_renegades",
+      "breakpoints": true
     }
   ]
 }
