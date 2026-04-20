@@ -63,7 +63,6 @@ auth.post('/register', async (c) => {
 auth.post('/login', async (c) => {
   const payload = await parseJsonBody(c)
   const details = validateLogin(payload)
-
   if (details.length > 0) {
     throw new ApiError(
       422,
@@ -138,7 +137,7 @@ auth.post('/refresh', async (c) => {
   }
 
   const accessToken = await signAccessToken(
-    { sub: session.user_id },
+    { sub: session.userId },
     c.env.JWT_SECRET,
   )
 
