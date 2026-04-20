@@ -11,6 +11,11 @@ import { sendError } from './utils/response.js'
 const app = new Hono()
 const api = new Hono()
 
+app.use('*', async (c, next) => {
+  c.set('traceId', crypto.randomUUID())
+  await next()
+})
+
 app.use(
   rateLimiter({
     binding: (c) => c.env.AUTH_LIMITER,
@@ -27,11 +32,6 @@ app.use(
     },
   }),
 )
-
-app.use('*', async (c, next) => {
-  c.set('traceId', crypto.randomUUID())
-  await next()
-})
 
 app.use(
   '/api/*',
