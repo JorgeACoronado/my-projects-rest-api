@@ -7,7 +7,7 @@
     {
       "binding": "DB",
       "database_name": "projects_db",
-      "database_id": "38fb01ab-c80d-4194-9cea-30490f1ecc12",
+      "database_id": "42b72596-471d-403e-bc4f-88a552ba8ab7",
       "migrations_dir": "./src/data/migrations",
     },
   ],
